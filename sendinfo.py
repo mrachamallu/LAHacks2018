@@ -5,7 +5,7 @@ import time
 
 import re
 
-matrix = open("data_train.txt", "w+")
+matrix = open("data_train1.txt", "w+")
 
 
 
