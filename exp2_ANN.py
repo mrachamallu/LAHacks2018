@@ -7,17 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report,confusion_matrix
 
-
-"""
-import the X dataset
-import the y dataset
-"""
-
-"""
-read and make a list of list X from the data_train1 dataset
-for the first experiment
-"""
-with open("data_train1.txt", "r+") as f:
+with open("data_train2.txt", "r+") as f:
     X = []
     for line in f.readlines():
         #replace nan with 0.0 values
@@ -45,19 +35,19 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Instance of ANN
-mlp = MLPClassifier(hidden_layer_sizes=(30,30,30))
+# Train the ANN starting from the previous 
+mlp = joblib.load('trained_matrix1.pkl')
 
 #Training ANN
 mlp.fit(X_train,y_train)
 
 
-#Predicting on X_test matrix
 start = time.time()
+#Predicting
 predictions = mlp.predict(X_test)
 end = time.time()
 
-joblib.dump(mlp, 'trained_matrix1.pkl')
+joblib.dump(mlp, 'trained_matrix2.pkl')
 # print(X_test)
 print("time taken={}".format(end-start) )
 print(confusion_matrix(y_test,predictions))
