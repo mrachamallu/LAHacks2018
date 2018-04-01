@@ -17,20 +17,25 @@ import the y dataset
 read and make a list of list X from the data_train1 dataset
 for the first experiment
 """
-with open("data_train1.txt", "r+") as f:
+with open("data_train1.txt", "r") as f:
     X = []
     for line in f.readlines():
         #replace nan with 0.0 values
         X.append(line.replace('nan', '0.0'))
 #X (2D) list created that has strings of the float values of matrix
 X = [i.strip()[1:-1].split(',') for i in X]
-
+print("length of X is = {}".format(len(X)))
 #getting values of scare for the experiment
 values_of_y = int(input("What is the value of y in this experiment?"))
 
 #make y a list of integers of [X's columns x 1] matrix
 y = [values_of_y for i in range(0,len(X))]
 
+for i in range(0, 3002+4294):
+	y[i] = 0
+
+print("number of 0 in y = {}".format(y.count(0)))
+print("number of 1 in y = {}".format(y.count(1)))
 #we split the data set into training and testing data
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 

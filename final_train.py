@@ -25,9 +25,9 @@ def fear_factor(matrix):#the matrix has some nan values. this needs to be fixed 
 	#import the trained ANN
 	mlp = joblib.load('trained_matrix1.pkl')
 
+
 	#converting X to a 2D matrix and predicting the value of fear
-	predictions = mlp.predict([X])
+	predictions = mlp.predict_proba([X])
 
 	#return the values of fear as a float to keep conversion safe
-	return float(predictions[0])
- 
+	return predictions[0][0]

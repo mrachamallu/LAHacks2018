@@ -5,7 +5,7 @@ import time
 
 import re
 
-matrix = open("data_train1.txt", "w+")
+matrix = open("data_train3_new.txt", "w+")
 
 
 
@@ -58,7 +58,7 @@ except ServerError:
 server.start()
 
 if __name__ == "__main__":
-    for i in range(100):
+    while 1:
         time.sleep(1)
 
 matrix.close()

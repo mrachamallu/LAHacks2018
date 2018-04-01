@@ -4,8 +4,13 @@ import sys
 import time
 import final_train
 import re
+import socket
+import time
 
-matrix = open("data_train1.txt", "w+")
+
+
+
+
 
 
 
@@ -30,12 +35,12 @@ class MuseServer(ServerThread):
     #handle unexpected messages
     @make_method(None, None)
     def fallback(self, path, args, types, src):
-        """ print("Unknown message \
-        \n\t Source: '%s' \
-        \n\t Address: '%s' \
-        \n\t Types: '%s ' \
-        \n\t Payload: '%s'" \
-        % (src.url, path, types, args))"""
+        #  print("Unknown message \
+        # \n\t Source: '%s' \
+        # \n\t Address: '%s' \
+        # \n\t Types: '%s ' \
+        # \n\t Payload: '%s'" \
+        # % (src.url, path, types, args))
         word1 = "relative"
         word2 = "absolute"
         word3 = "score"
@@ -43,8 +48,26 @@ class MuseServer(ServerThread):
             # print(args)
             self.GL = self.GL + args
             if re.search("theta_session_score", path):
-                print("Prediction =", final_train.fear_factor(self.GL))
+                prediction=final_train.fear_factor(self.GL)
+                print("prediction={}".format(prediction))
+                prediction=int(prediction*100)
+                ###can do some processing before sending###
+                conn.send((str(prediction).zfill(3)).encode())#just write the prediction to the port 
                 self.GL = []
+
+
+#####################server code#######################
+TCP_IP = '127.0.0.1'
+TCP_PORT = 5005 #any port number
+
+my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+my_socket.bind((TCP_IP, TCP_PORT))
+my_socket.listen(1)
+
+conn, addr = my_socket.accept()
+print ('Connection address:', addr)
+#####################server code#######################
+
 
 try:
     server = MuseServer()
@@ -56,7 +79,7 @@ except ServerError:
 server.start()
 
 if __name__ == "__main__":
-    for i in range(100):
+    for i in range(1000):
         time.sleep(1)
 
 matrix.close()
