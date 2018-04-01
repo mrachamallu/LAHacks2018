@@ -2,6 +2,8 @@ from liblo import *
 
 import sys
 import time
+import laHacksANN
+import re
 
 
 class MuseServer(ServerThread):
@@ -31,6 +33,9 @@ class MuseServer(ServerThread):
         \n\t Payload: '%s'" \
         % (src.url, path, types, args))
 
+
+
+print("test")
 try:
     server = MuseServer()
 except ServerError:
@@ -41,5 +46,6 @@ except ServerError:
 server.start()
 
 if __name__ == "__main__":
+    print("test_1")
     while 1:
         time.sleep(1)
