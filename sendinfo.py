@@ -1,7 +1,8 @@
 from liblo import *
 
-import sys
+import sys 
 import time
+import re
 
 
 class MuseServer(ServerThread):
@@ -24,17 +25,24 @@ class MuseServer(ServerThread):
     #handle unexpected messages
     @make_method(None, None)
     def fallback(self, path, args, types, src):
-        print ("Unknown message \
+        print("Unknown message \
         \n\t Source: '%s' \
         \n\t Address: '%s' \
         \n\t Types: '%s ' \
         \n\t Payload: '%s'" \
         % (src.url, path, types, args))
+        word1 = "relative"
+        word2 = "absolute"
+        word3 = "score"
+        if re.search(word1, path):
+            print("ANN(args)")
+        elif re.search(word2, path):
+            print("word2")
 
 try:
     server = MuseServer()
 except ServerError:
-    print ("error!!!")
+    print("err")
     sys.exit()
 
 
